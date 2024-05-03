@@ -28,6 +28,18 @@ jobs:
         run: |
           mvn clean
           mvn -B package --file pom.xml
-      - name: unit tests
-          run: mvn -B test --file pom.xml
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v1
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: '17'
+      - name: Run automated tests
+        run: |
+          mvn test
+
 
