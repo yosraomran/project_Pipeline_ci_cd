@@ -9,5 +9,11 @@ class AppDevopsPipelineApplicationTests {
     @Test
     void contextLoads() {
     }
+    @Test
+    void applicationContextTest() {
+        AppDevopsPipelineApplication.main(new String[] {});
+    }
 
 }
+
+
