@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des commandes</title>
+</head>
+<body>
+<h1>Liste des commandes</h1>
+<table border="1">
+    <tr>
+        <th>ID de commande</th>
+        <th>Utilisateur</th>
+        <th>Produits</th>
+    </tr>
+    <tr th:each="order : ${orders}">
+        <td th:text="${order.id}"></td>
+        <td th:text="${order.user.username}"></td>
+        <td>
+            <ul>
+                <li th:each="item : ${order.items}" th:text="${item.product.name + ' (Quantité: ' + item.quantity + ')'}"></li>
+            </ul>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

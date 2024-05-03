@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>New Order</title>
+</head>
+<body>
+<h1>New Order</h1>
+<form action="#" th:action="@{/orders/create}" th:object="${order}" method="post">
+  <label for="user">User:</label>
+  <select id="user" th:field="*{user}">
+    <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.name}"></option>
+  </select>
+  <br/>
+  <h2>Order Items</h2>
+  <div th:each="item, itemStat : *{items}">
+    <div>
+      <label th:for="'items[' + ${itemStat.index} + '].productId'">Product ID:</label>
+      <input type="number" th:field="*{items[__${itemStat.index}__].productId}"/>
+      <label th:for="'items[' + ${itemStat.index} + '].quantity'">Quantity:</label>
+      <input type="number" th:field="*{items[__${itemStat.index}__].quantity}"/>
+    </div>
+  </div>
+  <button type="button" onclick="addItem()">Add Item</button>
+  <br/>
+  <button type="submit">Create</button>
+</form>
+
+<script th:inline="javascript">
+  /*<![CDATA[*/
+  function addItem() {
+    var index = document.querySelectorAll('[th\\:field^="*{items"]').length;
+    var itemTemplate = `
+            <div>
+                <label th:for="'items[' + ${index} + '].productId'">Product ID:</label>
+                <input type="number" th:field="*{items[__${index}__].productId}"/>
+                <label th:for="'items[' + ${index} + '].quantity'">Quantity:</label>
+                <input type="number" th:field="*{items[__${index}__].quantity}"/>
+            </div>`;
+    document.querySelector('[th\\:each="item, itemStat : *{items}"]').insertAdjacentHTML('beforeend', itemTemplate);
+  }
+  /*]]>*/
+</script>
+</body>
+</html>
