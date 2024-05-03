@@ -17,6 +17,11 @@ jobs:
           distribution: 'adopt'
           java-version: '17'
 
-      - name: Build and run Spring Boot application
+      - name: Build with Maven
         run: |
-          ./mvnw spring-boot:run
+          chmod +x mvnw
+          ./mvnw clean package
+
+      - name: Run Spring Boot application
+        run: |
+          java -jar C:/Users/HP/Desktop/projet_devops/app_devops_pipeline\.mvn\wrapper/maven-wrapper.jar
