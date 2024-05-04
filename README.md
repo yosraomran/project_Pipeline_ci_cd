@@ -9,10 +9,25 @@ Mise en place d'une pipeline DevOps avec des tests automatisés.
 
 ## Getting Started
 
-### Step 1: Set up GitHub Repository
-Create a new GitHub repository for your Spring Boot application project.
+### Step 1: Initialisez un dépôt Git local sur votre ordinateur et connectez-le à votre dépôt GitHub.
+```bash
+# Clonez le dépôt GitHub
+git clone https://github.com/yosraomran/project_pipeline_ci_cd.git
 
-### Step 2: Create GitHub Actions Workflow
+# Accédez au répertoire cloné
+cd app_devops_pipeline
+
+# Configurez le dépôt distant GitHub
+git remote add origin https://github.com/yosraomran/project_pipeline_ci_cd.git
+
+# Vérifiez la configuration du dépôt distant
+git remote -v
+```
+
+### Step 2: Structurez le code de projet en packages, modules ou classes appropriés.
+Organisez le  code Java en packages: models,controllers,repositories.
+
+### Step 3: Create GitHub Actions Workflow
 Create a new file called `.github/workflows/maven.yml` in the root directory of your project. This file will contain the instructions for building and testing your application.
 
 ```yaml
@@ -59,39 +74,23 @@ jobs:
         run: |
           mvn test
 
-  deployment:
-    name: Deployment
-    runs-on: ubuntu-latest
-    needs: [test]
-    steps:
-      - uses: actions/checkout@v2
-      - name: Build the Docker image
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          dockerfile: Dockerfile
-          push: false
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/devops-pipeline:v1.0.0
-
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_HUB_USERNAME }}
-          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-
-      - name: Push the Docker image to Docker Hub
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          dockerfile: Dockerfile
-          push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/devops-pipeline:v1.0.0
-````
+  ````
   
 
 This maven.yml file sets up a workflow that runs on every push to the main branch. It has one job:
 
 build and test the application.
 
-## Step 4: Push to Github Repository
-Commit and push your changes to your Github repository. The Github Actions workflow should automatically trigger.
+### Step 4: Push to GitHub Repository
+Commit and push your changes to your GitHub repository. The GitHub Actions workflow should automatically trigger.
+
+```bash
+# Ajoutez tous les fichiers modifiés à l'index
+git add .
+
+# Créez un nouveau commit avec un message descriptif
+git commit -m "Votre message de commit"
+
+# Poussez les modifications vers le dépôt GitHub
+git push origin main
+```
